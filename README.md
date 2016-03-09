@@ -15,7 +15,7 @@ Write a program that accepts a twitter username as input, and returns the last 5
 ### Solution
 Both solutions are set up as a Gradle project.
 * [Install Gradle] (https://docs.gradle.org/current/userguide/installation.html).
-* Open terminal in the project root folder (Twitter aor BlackJack)
+* Open terminal in the project root folder (Twitter or BlackJack)
 * Run "gradle assemble"
 * Navigate to ProjectRoot\build\libs
 * Run "java -jar ProjectName.jar [input params]"
