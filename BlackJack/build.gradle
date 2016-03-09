@@ -1,0 +1,21 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+jar 
+{
+    manifest 
+	{
+        attributes 'Main-Class': 'loodakrawa.blackjack.Main'
+    }
+}
+
+repositories { mavenCentral() }
+
+dependencies 
+{
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}

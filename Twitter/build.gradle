@@ -1,0 +1,22 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'loodakrawa.twitter.Main'
+    }
+	
+	from {
+		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+	}
+}
+
+repositories { mavenCentral() }
+
+dependencies {
+    compile group: 'org.twitter4j', name:'twitter4j-core', version: '4.+'
+}
