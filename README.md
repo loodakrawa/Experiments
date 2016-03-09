@@ -14,8 +14,20 @@ Write a program that accepts a twitter username as input, and returns the last 5
 
 ### Solution
 Both solutions are set up as a Gradle project.
+* [Install Gradle] (https://docs.gradle.org/current/userguide/installation.html).
+* Open terminal in the project root folder (Twitter aor BlackJack)
+* Run "gradle assemble"
+* Navigate to ProjectRoot\build\libs
+* Run "java -jar ProjectName.jar [input params]"
+
+###### BlackJack
+To Run: java -jar BlackJack.jar [list of cards]
+e.g. java -jar BlackJack.jar 5s ad
 
 ###### Twitter
+To Run: java -jar Twitter.jar username [tweetNumber]
+e.g. java -jar Twitter.jar cnn 5
+
 This solution uses the [Twitter4J library](http://twitter4j.org/en/index.html) as recommended on the [official documentation] (https://dev.twitter.com/overview/api/twitter-libraries#java)
 
 Twitter's REST APIs only allow access to authenticated users/apps. Because of that, this test application requires specific secret user credentials which are not included with the source code. Please sign it at https://apps.twitter.com/, create an APP and fill the [properties file](https://github.com/loodakrawa/JavaCodeTest/blob/master/Twitter/src/main/resources/twitterAuth.properties) with the generated credentials.
