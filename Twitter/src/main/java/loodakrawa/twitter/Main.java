@@ -1,6 +1,7 @@
 package loodakrawa.twitter;
 
 import twitter4j.*;
+import twitter4j.api.UsersResources;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -14,6 +15,15 @@ public class Main
     private static final String AUTH_PROPERTIES_PATH = "twitterAuth.properties";
     private static final int DEFAULT_TWEET_COUNT = 5;
 
+    /**
+     * Application entry point.
+     *
+     * Accepts a Twitter username and an optional tweet count and displays basic info about the associated Twitter
+     * account and the last N tweets where N is the passed tweet count value.
+     *
+     * @param args command line parameters.
+     * @throws Exception
+     */
     public static void main(String args[]) throws Exception
     {
         if(args.length == 0)
@@ -37,20 +47,25 @@ public class Main
             }
         }
 
-        List<Status> tweets = LoadTweets(username, tweetCount);
+        Configuration config = LoadConfiguration();
+        Twitter twitter = new TwitterFactory(config).getInstance();
+
+        UsersResources us = twitter.users();
+        User user = us.showUser(username);
+
+        System.out.println("Username: " + username);
+        System.out.println("Tweets: " + user.getStatusesCount());
+        System.out.println("Following: " + user.getFriendsCount());
+        System.out.println("Followers: " + user.getFollowersCount());
+        System.out.println("Likes: " + user.getFavouritesCount());
+
+        System.out.println("Last " + tweetCount + " tweets:");
+        Paging paging = new Paging(1, tweetCount);
+        List<Status> tweets = twitter.getUserTimeline(username, paging);
         for (Status s : tweets)
         {
             System.out.println(s.getText());
         }
-    }
-
-    private static List<Status> LoadTweets(String username, int count) throws TwitterException
-    {
-        Configuration config = LoadConfiguration();
-        Twitter twitter = new TwitterFactory(config).getInstance();
-
-        Paging paging = new Paging(1, count);
-        return twitter.getUserTimeline(username, paging);
     }
 
     private static Configuration LoadConfiguration()
