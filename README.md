@@ -32,3 +32,5 @@ This solution uses the [Twitter4J library](http://twitter4j.org/en/index.html) a
 
 Twitter's REST APIs only allow access to authenticated users/apps. Because of that, this test application requires specific secret user credentials which are not included with the source code. Please sign it at https://apps.twitter.com/, create an APP and fill the [properties file](https://github.com/loodakrawa/JavaCodeTest/blob/master/Twitter/src/main/resources/twitterAuth.properties) with the generated credentials.
 More about auth in the [official documentation](https://dev.twitter.com/oauth).
+
+Made a change
