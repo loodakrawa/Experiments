@@ -6,5 +6,5 @@ import lombok.Data;
 
 @Data
 public class Result {
-	private final List<String> results;
+	private final List<Item> matches;
 }

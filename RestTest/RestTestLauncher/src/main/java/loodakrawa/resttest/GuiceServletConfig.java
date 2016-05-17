@@ -1,34 +1,33 @@
 package loodakrawa.resttest;
 
-import javax.inject.Singleton;
+import javax.servlet.ServletContextEvent;
 
-import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+import org.elasticsearch.client.Client;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
-import com.sun.jersey.guice.JerseyServletModule;
-import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 
-import loodakrawa.resttest.dal.DummyDAO;
-import loodakrawa.resttest.dal.SearchDAO;
-import loodakrawa.resttest.service.SearchService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class GuiceServletConfig extends GuiceServletContextListener {
+
+	private final Injector injector = Guice.createInjector(new RestTestModule());
+	
 	@Override
 	protected Injector getInjector() {
-		return Guice.createInjector(new JerseyServletModule() {
-			@Override
-			protected void configureServlets() {
-				bind(SearchDAO.class).to(DummyDAO.class);
-				
-				bind(SearchService.class);
-				
-				serve("/*").with(GuiceContainer.class);
-				// Configuring Jersey via Guice:
-				bind(JacksonJsonProvider.class).in(Singleton.class);
-
-			}
-		});
+		return injector;
 	}
+	
+	@Override
+	public void contextDestroyed(ServletContextEvent event) {
+		super.contextDestroyed(event);
+		
+		log.info("Closing Elasticsearch Transport Client");
+		Client client = injector.getInstance(Client.class);
+		client.close();
+	}
+
+	
 }
